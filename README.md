@@ -88,6 +88,7 @@ skill_view(name="sakurairo-arcaea-blog-skill")
 | `ui-designer` | 整页布局生成 | — |
 | `css-master` | 设计 Token、Sakurairo 冲突诊断 | — |
 | `wordpress-content-management` | MCP 发布桥 | — |
+| `web-design-guidelines` | Vercel Web 界面规范审查 | — |
 
 ### Skills.sh 生态（可选增强）
 | 技能 | 安装量 | 用途 | 仓源码 |

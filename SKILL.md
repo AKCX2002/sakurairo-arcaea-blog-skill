@@ -1,7 +1,7 @@
 ---
 name: sakurairo-arcaea-blog-skill
 description: 应用 Arcaea/音游玻璃拟态风格 Sakurairo WordPress 博客的组合技能。封装了多轮迭代设计的精确 CSS 数值、配色 Token、层级体系、Sakurairo 主题冲突覆盖方案和 WordPress MCP 发布工作流。一个文件解决全部。
-version: 1.2.1
+version: 1.2.0
 ---
 
 # Sakurairo Arcaea Blog Skill
@@ -46,13 +46,14 @@ version: 1.2.1
 
 ### Skills.sh 生态（已安装 — 功能增强）
 
-7. **`sakurairo-theme`** — Sakurairo 主题功能完整指南：短代码、颜色系统、AI 摘要等
-8. **`wordpress-pro`** (4.9K ⭐) — WordPress 专业开发
-9. **`ckm:design`** / **`ui-ux-pro-max`** (21.2K ⭐) — UI/UX 设计综合
-10. **`tailwind`** (46.7K ⭐) — Tailwind CSS v4
-11. **`animejs`** (634 ⭐) — 动画库
-12. **`react`** (2.3K ⭐) — React 组件
-13. **`hyva-child-theme`** — 主题开发参考
+7. **`web-design-guidelines`** (Vercel) — Web 界面规范审查
+8. **`sakurairo-theme`** — Sakurairo 主题功能完整指南：短代码、颜色系统、AI 摘要等
+9. **`wordpress-pro`** (4.9K ⭐) — WordPress 专业开发
+10. **`ckm:design`** / **`ui-ux-pro-max`** (21.2K ⭐) — UI/UX 设计综合
+11. **`tailwind`** (46.7K ⭐) — Tailwind CSS v4
+12. **`animejs`** (634 ⭐) — 动画库
+13. **`react`** (2.3K ⭐) — React 组件
+14. **`hyva-child-theme`** — 主题开发参考
 
 > **版本同步**：本技能的 Arcaea CSS 值（v5.2）与 `ui-beautify` v2.2+ 同步。修改其一请同步更新另一个。
 
@@ -64,7 +65,8 @@ skill_view(name="ui-beautify")
 skill_view(name="ui-designer")
 skill_view(name="css-master")
 skill_view(name="wordpress-content-management")
-skill_view(name="sakurairo-theme")
+skill_view(name="web-design-guidelines")        # 补充: Vercel Web界面规范审查
+skill_view(name="sakurairo-theme")              # 补充: Sakurairo 主题 API/短代码/颜色系统
 skill_view(name="wordpress-pro")
 skill_view(name="ckm:design")
 skill_view(name="tailwind")
