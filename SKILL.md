@@ -1,7 +1,7 @@
 ---
 name: sakurairo-arcaea-blog-skill
 description: 应用 Arcaea/音游玻璃拟态风格 Sakurairo WordPress 博客的组合技能。封装了多轮迭代设计的精确 CSS 数值、配色 Token、层级体系、Sakurairo 主题冲突覆盖方案和 WordPress MCP 发布工作流。一个文件解决全部。
-version: 1.2.0
+version: 1.2.1
 ---
 
 # Sakurairo Arcaea Blog Skill
@@ -53,6 +53,8 @@ version: 1.2.0
 11. **`animejs`** (634 ⭐) — 动画库
 12. **`react`** (2.3K ⭐) — React 组件
 13. **`hyva-child-theme`** — 主题开发参考
+
+> **版本同步**：本技能的 Arcaea CSS 值（v5.2）与 `ui-beautify` v2.2+ 同步。修改其一请同步更新另一个。
 
 加载方式：
 
