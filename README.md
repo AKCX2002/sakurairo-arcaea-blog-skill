@@ -81,22 +81,22 @@ skill_view(name="sakurairo-arcaea-blog-skill")
 ## 🧩 依赖技能
 
 ### Hermes 本地（必装）
-| 技能 | 用途 |
-|------|------|
-| `glassmorphism-ui` | 毛玻璃 CSS 模式库 |
-| `ui-beautify` | Arcaea v5 精确 CSS、卡层级、UI 诊断 |
-| `ui-designer` | 整页布局生成（Hero、网格、氛围背景） |
-| `css-master` | 设计 Token、Sakurairo 冲突诊断 |
-| `wordpress-content-management` | MCP 发布桥 |
+| 技能 | 用途 | 源码 |
+|------|------|------|
+| `glassmorphism-ui` | 毛玻璃 CSS 模式库 | — |
+| `ui-beautify` | Arcaea v5 精确 CSS | — |
+| `ui-designer` | 整页布局生成 | — |
+| `css-master` | 设计 Token、Sakurairo 冲突诊断 | — |
+| `wordpress-content-management` | MCP 发布桥 | — |
 
 ### Skills.sh 生态（可选增强）
-| 技能 | 安装量 | 用途 |
-|------|--------|------|
-| `sakurairo-theme` | — | Sakurairo 主题功能完整指南 |
-| `wordpress-pro` | 4.9K ⭐ | WordPress 专业开发 |
-| `ckm:design` / `ui-ux-pro-max` | 21.2K ⭐ | UI/UX 设计综合 |
-| `tailwind` | 46.7K ⭐ | Tailwind CSS v4 |
-| `animejs` | 634 ⭐ | 动画库 |
+| 技能 | 安装量 | 用途 | 仓源码 |
+|------|--------|------|--------|
+| `sakurairo-theme` | — | Sakurairo 主题功能完整指南 | [`AKCX2002/sakurairo-theme`](https://github.com/AKCX2002/sakurairo-theme) |
+| `wordpress-pro` | 4.9K ⭐ | WordPress 专业开发 | — |
+| `ckm:design` / `ui-ux-pro-max` | 21.2K ⭐ | UI/UX 设计综合 | — |
+| `tailwind` | 46.7K ⭐ | Tailwind CSS v4 | — |
+| `animejs` | 634 ⭐ | 动画库 | — |
 
 ## 🌐 线上落地
 
