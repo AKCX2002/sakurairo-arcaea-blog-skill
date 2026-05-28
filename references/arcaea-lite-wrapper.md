@@ -34,12 +34,9 @@
 .arcaea-wrap h2{margin-top:36px;padding-bottom:8px;border-bottom:1px solid rgba(158,207,255,0.10);font-size:1.75em}
 .arcaea-wrap p{color:#d8e8f8;line-height:1.85;font-size:1.02em;text-indent:2em}
 .arcaea-wrap blockquote{background:linear-gradient(135deg,rgba(40,70,120,0.22),rgba(20,30,50,0.14))!important;border-left:3px solid rgba(126,200,255,0.55)!important;border-radius:12px!important;padding:16px 28px 16px 36px!important;margin:18px 0!important;color:#f8fbff!important;font-size:1.06em!important;line-height:1.85!important;text-indent:0!important}
-.arcaea-wrap blockquote::before{content:"(´・ω・`)"!important;position:absolute;left:-6px;top:-3px;font-size:0.8em;color:rgba(157,200,255,0.30)}.arcaea-wrap blockquote::after{display:none!important;content:none!important}
+.arcaea-wrap blockquote::before{content:"(^^)"!important;position:absolute;left:-6px;top:-3px;font-size:0.8em;color:rgba(157,200,255,0.30)}.arcaea-wrap blockquote::after{display:none!important;content:none!important}
 .arcaea-wrap blockquote p{margin:0!important;padding:0!important;border:none!important;background:none!important;text-indent:0!important}
-.arcaea-wrap hr{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(158,207,255,0.10),transparent);margin:28px 0;position:relative}
-.arcaea-wrap hr::after{content:"❀";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:rgba(157,200,255,0.25);font-size:0.7em;background:#0a0e18;padding:0 12px}
-.arcaea-wrap .article-end{text-align:center;margin:40px 0 20px;color:rgba(157,200,255,0.20);font-size:0.85em;letter-spacing:0.15em}
-.arcaea-wrap .article-end::before{content:"── ✦ ❀ 了 ❀ ✦ ──"}
+.arcaea-wrap hr{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(158,207,255,0.10),transparent);margin:28px 0}
 @media(prefers-reduced-motion:reduce){.bg-glow-1,.bg-glow-2{animation:none}}
 pre,code{font-family:"FiraCode Nerd Font","Fira Code","JetBrainsMono Nerd Font",monospace!important;font-size:14px;line-height:1.6}
 *:focus-visible{outline:2px solid rgba(139,167,255,0.7);outline-offset:2px}
