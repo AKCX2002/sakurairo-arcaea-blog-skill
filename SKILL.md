@@ -1,7 +1,7 @@
 ---
 name: sakurairo-arcaea-blog-skill
 description: 应用 Arcaea/音游玻璃拟态风格 Sakurairo WordPress 博客的组合技能。封装了多轮迭代设计的精确 CSS 数值、配色 Token、层级体系、Sakurairo 主题冲突覆盖方案和 WordPress MCP 发布工作流。一个文件解决全部。
-version: 1.8.0
+version: 1.8.1
 ---
 
 # Sakurairo Arcaea Blog Skill
@@ -822,5 +822,7 @@ git pull
 9. **PUC 自动更新 zip 结构要求**：release zip 内目录名必须匹配插件 slug（`babel-arcaea-mermaid/`），不可带版本号。必须包含 `lib/`（PUC 库本身），否则更新后 PUC 丢失，后续无法检查更新。推荐传 `GH_TOKEN` 给 `setAuthentication()` 提 GitHub API 限速 60→5000 req/h。
 
 10. **Mermaid ESM 本地化需完整 chunk 文件**：`mermaid.esm.min.mjs` 是 ESM 动态导入仓包，内部 `import()` 动态加载按需 chunk（flowDiagram-*.mjs、stateDiagram-*.mjs 等）。仅下载主文件会导致运行时 chunk URL 404。必须保留完整 `chunks/mermaid.esm.min/` 目录结构。CI 通过 jsDelivr API (`data.jsdelivr.com/v1/packages/npm/mermaid@${VER}`) 获取全部 chunk 列表并下载。
+
+12. **APA 引用文本不能混入 Mermaid 代码块**：` ```mermaid ` 代码块内只允许图表语法。在块末尾写 `ref(APA): ...` 或 `Retrieved ...` 会触发 Syntax error。引用必须放在代码块外部的 Markdown 段落中，或作为节点文本用引号包裹。详见 `references/mermaid-reference-pattern.md`。
 
 11. **WordPress 插件 CI/CD 完整模式**见 `references/wordpress-plugin-cicd.md`。关键三要素：`the_content` PHP filter 替换（priority 1）、PUC 自动更新、本地资产双依赖自动同步。
