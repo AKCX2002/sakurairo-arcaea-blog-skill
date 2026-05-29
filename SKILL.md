@@ -1,7 +1,7 @@
 ---
 name: sakurairo-arcaea-blog-skill
 description: 应用 Arcaea/音游玻璃拟态风格 Sakurairo WordPress 博客的组合技能。封装了多轮迭代设计的精确 CSS 数值、配色 Token、层级体系、Sakurairo 主题冲突覆盖方案和 WordPress MCP 发布工作流。一个文件解决全部。
-version: 1.7.1
+version: 1.7.2
 ---
 
 # Sakurairo Arcaea Blog Skill
@@ -83,6 +83,7 @@ Arcaea 的视觉气质是 **"遥远、冰冷、孤独"**——白色空间 + 碎
 - `prefers-reduced-motion` 暗模式适配
 
 **完整 CSS 模板文件**：`references/article-wrapper-css.md`
+**设计 Token 参考**：`references/visual-tokens.md`
 
 **压缩版（直接用于文章）**：
 ```css
@@ -556,7 +557,22 @@ d. 验证：随机抽检 3-5 篇文章，确认样式块、包裹层、blockquot
 - 如果文章有杂乱内联样式（如嵌入的完整 HTML 文档）→ 剥离后再包裹
 - CSS 被 wpautop 插入 `<p>` 不影响浏览器渲染，可忽略
 
-### 6. 内容语言规则（v1.7.0 新增）
+### 6. 文章视觉一致性诊断（v1.7.2 新增）
+
+当用户反馈两篇文章「看起来不一样」或「样式不统一」时，按以下 4 个维度逐项对比：
+
+| 维度 | 检查项 | 诊断方法 |
+|------|--------|---------|
+| **卡片透明度/背景** | 卡片是否发灰或被遮罩压暗？边框是亮白还是灰蓝？ | 对比两篇文章的 `.arcaea-article-content` 子元素背景色、边框色、`backdrop-filter` 值 |
+| **标题装饰** | 是否有异常的胶囊底纹或标签？h2/h3 的 `::after` 是否被主题注入？ | 检查 h2/h3 的 `::after` 伪元素；对比 border-bottom / text-shadow |
+| **字体权重与对比度** | 正文文字是否偏灰偏淡？列表项是否加粗？ | 对比 `color`、`font-weight`、`opacity` 值；特别检查 `<li>` |
+| **背景遮罩强度** | 整体是否「雾蒙蒙」？背景色调是否有差异（暗红 vs 蓝灰）？ | 对比 `background` 和 `backdrop-filter` 值 |
+
+修复方向：统一为 `rgba(8,21,42,0.42)` 深蓝半透明底 + `rgba(230,238,255,0.78)` 亮白细边 + `rgba(238,244,255,0.94)` 高对比文字 + `backdrop-filter: blur(12px) saturate(130%)` + `inset 0 1px 0 rgba(255,255,255,0.12)` 白色内嵌高光。
+
+所有设计 Token 值见 `references/visual-tokens.md`。
+
+### 7. 内容语言规则（v1.7.0 新增）
 
 **全站仅使用中文**。禁止出现全英文文章。
 - 新文章直接以中文撰写
