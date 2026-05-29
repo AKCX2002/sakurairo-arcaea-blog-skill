@@ -580,6 +580,19 @@ d. 验证：随机抽检 3-5 篇文章，确认样式块、包裹层、blockquot
 - 代码块中的英文注释、标识符、技术术语保持原样
 - 正文中的英文术语（API、I2C、MCU 等）保留，无需翻译
 
+### 8. 批量注入 Mermaid 图（v1.7.2 新增）
+
+当需要为大量技术文章批量添加 Mermaid 架构图/状态图/时序图时：
+
+a. 按文章主题分组：架构分层→flowchart TB、状态机→stateDiagram-v2、协议通信→sequenceDiagram
+b. 每个图用 Mermaid `theme: "base"` 语法，节点加 `style`（填 `fill:transparent,stroke:#8dc7ff,color:#eaf4ff` 适配深色毛玻璃背景）
+c. 插入位置：第一个 `</p>` 之后（引言段落后），第一个 `<h2>` 之前
+d. 注入前检查 `mermaid` 字符串是否已存在（避免二次注入）
+e. 通过 WordPress REST API 批量 POST 更新
+f. 验证：所有目标文章含 `mermaid` 字符串
+
+详细注入模式见 [`references/mermaid-injection-pattern.md`](references/mermaid-injection-pattern.md)。
+
 ---
 
 ## Pitfalls
@@ -723,10 +736,11 @@ d. 主题跟随页面：Arcaea Dark（默认）/ Arcaea Light / Auto
 
 | 变量 | Arcaea Dark | Arcaea Light |
 |------|------------|-------------|
-| primaryColor | `#1b2233` 深空蓝 | `#f7fbff` 浅蓝白 |
-| lineColor | `#8abfff` 冰蓝 | `#5c9ee6` |
-| textColor | `#eaf4ff` | `#263141` |
-| nodeBorder | `#8dc7ff` | `#7cbcff` |
+| primaryColor | `#202a40` 深空蓝 | `#f6fbff` 浅蓝白 |
+| primaryTextColor | `#f2f8ff` 亮白 | `#243246` 深蓝灰 |
+| lineColor | `#9fd2ff` 冰蓝 | `#3d8fd9` |
+| textColor | `#f2f8ff` | `#243246` |
+| nodeBorder | `#9fd2ff` | `#5ba8f5` |
 | fontFamily | FiraCode Nerd Font | 同左 |
 
 ### Pitfalls
@@ -734,4 +748,29 @@ d. 主题跟随页面：Arcaea Dark（默认）/ Arcaea Light / Auto
 1. **Mermaid 版本锁定**：用 `11.15.0` 而非 `@latest`，避免上游安全修复或样式清洗破坏渲染
 2. **语法兼容**：`D{"复杂文本"}` 这类写法在某些版本解析失败，改 `D{文本}` 更稳
 3. **安全等级**：技术博客用 `strict` 足够，只有图表内需要 HTML 链接时才降级 `loose`
-4. **Prism 冲突**：插件在渲染前把 `<pre><code class="language-mermaid">` 替换为 `<div class="bam-mermaid-wrap">`，Prism 不会抢。如果 Prism 比插件更晚执行，考虑延迟插件或监听 load 事件
+4. **Prism 冲突**：插件在渲染前先把 `<pre class="no-highlight">` 标记 + `data-prism-no-highlight` 属性，再 `replaceWith` 替换为 `<div class="bam-mermaid-wrap">`。原 `<pre>` 从 DOM 彻底移除，Prism 不会操作已不存在的元素
+
+### 已知修复历史
+
+| 版本 | 修复 |
+|------|------|
+| v1.0.0 | 初始版本 |
+| v1.1.0 | SVG 尺寸归一化 `width:100%!important;height:auto`；高对比主题变量（`#f2f8ff` 亮白文字 + `#9fd2ff` 亮蓝连线）；CSS 兜底文字/节点/连线强制颜色；移动端 `min-width:560px` 横向滚动；`force_full_width` + `debug_mode` 选项 |
+| v1.1.1 | CI 自动 bump patch：推 main 自动 `patch+1` → commit `[skip ci]` → build zip → release；zip 文件名带版本号 `babel-arcaea-mermaid-{ver}.zip` |
+| v1.1.2 | Prism.js 冲突修复：两遍遍历，先标记 `no-highlight` + `data-prism-no-highlight`，再 `replaceWith` 移除原 `<pre>` |
+
+### 常用命令
+
+```bash
+# 部署到 WordPress 服务器
+cd /var/www/html/wp-content/plugins/
+git clone https://github.com/AKCX2002/babel-arcaea-mermaid.git
+
+# 更新插件
+cd /var/www/html/wp-content/plugins/babel-arcaea-mermaid
+git pull
+```
+5. **Mermaid 代码块格式必须正确**：必须用 `<pre><code class="language-mermaid">`，不可用 `<p>\`\`\`mermaid</p>`。WordPress REST API 保存 `<p>\`\`\`mermaid` 后 wpautop 会在每行插 `<br />`，插件 JS 的 `pre code.language-mermaid` 选择器匹配不到 `<p>`，永不渲染。
+6. **SVG 尺寸过小**：Mermaid SVG 默认 width/height 很小。需在 `mermaid.run()` 后调用 `normalizeRenderedSvgs()`：移除 height、设 width=100%、设 preserveAspectRatio=xMidYMid meet。小图（<480px）限宽 720px。移动端 min-width:560px + overflow-x:auto。
+7. **SVG 内部文字/连线需 CSS 强制**：Mermaid SVG text/nodeLabel/edgeLabel 不受外层 CSS 控制，必须用 `fill:#f2f8ff!important; font-size:15px!important` 强制兜底。node rect/edgePath 用 `stroke` + `stroke-width` 强制可见。
+8. **高对比度主题变量**：v1 的 `#1b2233`/`#eaf4ff` 对比度不足。推荐 Arcaea Dark: primaryColor=`#202a40`, textColor=`#f2f8ff`, lineColor=`#9fd2ff`。Light: primaryColor=`#f6fbff`, textColor=`#243246`, lineColor=`#3d8fd9`。必须覆盖 actor/note/signal/title/label/cluster 全部变量，fontSize=`15px`。
