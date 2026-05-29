@@ -756,8 +756,11 @@ d. 主题跟随页面：Arcaea Dark（默认）/ Arcaea Light / Auto
 |------|------|
 | v1.0.0 | 初始版本 |
 | v1.1.0 | SVG 尺寸归一化 `width:100%!important;height:auto`；高对比主题变量（`#f2f8ff` 亮白文字 + `#9fd2ff` 亮蓝连线）；CSS 兜底文字/节点/连线强制颜色；移动端 `min-width:560px` 横向滚动；`force_full_width` + `debug_mode` 选项 |
-| v1.1.1 | CI 自动 bump patch：推 main 自动 `patch+1` → commit `[skip ci]` → build zip → release；zip 文件名带版本号 `babel-arcaea-mermaid-{ver}.zip` |
+| v1.1.1 | CI 自动 bump patch：推 main 自动 `patch+1` → commit `[skip ci]` → build zip → release；zip 文件名带版本号 |
 | v1.1.2 | Prism.js 冲突修复：两遍遍历，先标记 `no-highlight` + `data-prism-no-highlight`，再 `replaceWith` 移除原 `<pre>` |
+| v1.1.3 | zip 内部目录名修复（slug 不带版本号）；lib/ 加入 release zip；PUC GitHub token 支持 |
+| v1.1.3 | zip 目录名修正 `babel-arcaea-mermaid/`（匹配 slug）；`lib/` 加入 release zip；PUC 传入 GitHub token |
+| v1.1.4 | 按 Mermaid 官方推荐重写：两步分离（protect→convert），PJAX 支持，自包含 JS，移除 PHP config 传参依赖 |
 
 ### 常用命令
 
