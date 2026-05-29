@@ -28,9 +28,9 @@
 ```python
 import os, re, json, urllib.request, base64, urllib.error
 
-SITE = "https://babel36acl.xyz"
+SITE = "https://your-site.com"  # 替换为你的网站地址
 # 从 wp_mcp_server.py 中提取凭证，避免明文密码
-MCP = os.path.expanduser("~/.hermes/scripts/wp_mcp_server.py")
+MCP = os.path.expanduser("~/.hermes/scripts/wp_mcp_server.py")  # 替换为你的凭证提取方式
 with open(MCP) as f:
     src = f.read()
 s = re.search(r'SITE = os\.environ\.get\("([^"]+)"', src).group(1)
