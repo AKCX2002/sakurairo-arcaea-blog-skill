@@ -645,3 +645,77 @@ data = json.dumps({"title":"T","content":html,"categories":[13],"status":"publis
 req = urllib.request.Request("https://site/wp-json/wp/v2/posts", data=data, headers=headers, method="POST")
 ```
 | 详见 [`references/publishing-python-pattern.md`](references/publishing-python-pattern.md)。**绝对禁止** `curl -u` 传密码（会泄露到 shell history）。
+
+---
+
+## Mermaid 图表渲染（Babel Arcaea Mermaid 插件）
+
+在文章/页面中嵌入 Mermaid 图表，自动以 Arcaea 玻璃风格渲染。
+
+### 插件
+
+https://github.com/AKCX2002/babel-arcaea-mermaid
+
+安装到 WordPress：
+
+```bash
+cd /var/www/html/wp-content/plugins/
+git clone https://github.com/AKCX2002/babel-arcaea-mermaid.git
+```
+
+后台 → 插件 → 启用 → 设置 → Arcaea Mermaid。
+
+### 文章写法
+
+````markdown
+```mermaid
+flowchart TD
+    A[WordPress] --> B[Mermaid.js]
+    B --> C[Arcaea SVG]
+```
+````
+
+或短代码：
+
+```
+[mermaid]
+flowchart TD
+    A[启动] --> B[渲染]
+[/mermaid]
+```
+
+### 工作流：文章里插入 Mermaid 图表
+
+当需要在技术文章中插入状态图、流程图、分层架构图时：
+
+a. 确认插件已启用（后台 → 设置 → Arcaea Mermaid）
+b. 在文章编辑器中用 ```` ```mermaid ```` 或 `[mermaid]` 短代码写图
+c. 发布后自动渲染为 Arcaea 风格 SVG（夜空背景 + 冰蓝连线 + 毛玻璃容器）
+d. 主题跟随页面：Arcaea Dark（默认）/ Arcaea Light / Auto
+
+### 推荐图表类型
+
+| 图表类型 | 适用场景 |
+|---------|---------|
+| `flowchart` | 协议流程、系统架构、分层图 |
+| `stateDiagram-v2` | FreeRTOS 状态机、设备状态迁移 |
+| `sequenceDiagram` | 多任务时序、HMI-MCU 通信 |
+| `gantt` | 项目排期、固件发版计划 |
+| `graph` | 网络拓扑、依赖关系 |
+
+### Arcaea 主题变量（Mermaid theme: "base"）
+
+| 变量 | Arcaea Dark | Arcaea Light |
+|------|------------|-------------|
+| primaryColor | `#1b2233` 深空蓝 | `#f7fbff` 浅蓝白 |
+| lineColor | `#8abfff` 冰蓝 | `#5c9ee6` |
+| textColor | `#eaf4ff` | `#263141` |
+| nodeBorder | `#8dc7ff` | `#7cbcff` |
+| fontFamily | FiraCode Nerd Font | 同左 |
+
+### Pitfalls
+
+1. **Mermaid 版本锁定**：用 `11.15.0` 而非 `@latest`，避免上游安全修复或样式清洗破坏渲染
+2. **语法兼容**：`D{"复杂文本"}` 这类写法在某些版本解析失败，改 `D{文本}` 更稳
+3. **安全等级**：技术博客用 `strict` 足够，只有图表内需要 HTML 链接时才降级 `loose`
+4. **Prism 冲突**：插件在渲染前把 `<pre><code class="language-mermaid">` 替换为 `<div class="bam-mermaid-wrap">`，Prism 不会抢。如果 Prism 比插件更晚执行，考虑延迟插件或监听 load 事件
