@@ -1,7 +1,7 @@
 ---
 name: sakurairo-arcaea-blog-skill
 description: 应用 Arcaea/音游玻璃拟态风格 Sakurairo WordPress 博客的组合技能。封装了多轮迭代设计的精确 CSS 数值、配色 Token、层级体系、Sakurairo 主题冲突覆盖方案和 WordPress MCP 发布工作流。一个文件解决全部。
-version: 1.10.1
+version: 1.11.0
 ---
 
 # Sakurairo Arcaea Blog Skill
@@ -592,6 +592,20 @@ e. 通过 WordPress REST API 批量 POST 更新
 f. 验证：所有目标文章含 `mermaid` 字符串
 
 详细注入模式见 [`references/mermaid-injection-pattern.md`](references/mermaid-injection-pattern.md)。
+
+### 9. 批量添加代码语言标注（code language detection—v1.11.0 新增）
+
+当批量处理文章中代码块缺失 `class="language-xxx"` 时：
+
+a. **全量扫描**：通过 WP REST API（`context=edit`）获取所有文章的 `content.raw`
+b. **检测裸 `<pre>`**：没有 `<code>` 包裹的 `<pre>text</pre>` → 用 `detect_language()` 检测语言后包裹为 `<pre><code class="language-xxx">text</code></pre>`
+c. **检测无语言类的 `<pre><code>`**：已有 `<code>` 但无 `language-xyz` → 用 `detect_language()` 检测并添加
+d. **升级 `language-text`**：被错误判为 `text` 的块 → 重新检测并改为正确的语言类（JSON 块常被截断缺 `}`，改用 `"key":` 模式检测）
+e. **不处理**：行内 `<code>`（函数名/变量引用），mermaid 块
+f. **语言检测优先顺序**：mermaid → JSON → YAML → Dart → C/C++ → Bash → CMake → Python → text
+g. **注意区分 `cmake` 命令 vs `cmake` DSL**：命令行 `cmake --preset Debug` → bash；CMake 语法 `cmake_minimum_required(...)` → cmake
+
+**批量更新脚本和完整 `detect_language()` 函数**见 [`references/code-language-detection.md`](references/code-language-detection.md)。每次 POST 后加 `time.sleep(0.3)` 避免限频。
 
 ---
 
